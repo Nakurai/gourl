@@ -60,7 +60,7 @@ func (c *RequestCmd) Execute(cmd string, actions []string, flags []Flag) (string
 		case "url":
 			newQuery.Url = flag.Value
 		default:
-			return "", fmt.Errorf("unknown flag %s. Use gourl --help for a list of valid flags", flag.Key)
+			return "", fmt.Errorf("unknown flag %s. Use gourl help for a list of valid flags", flag.Key)
 
 		}
 	}

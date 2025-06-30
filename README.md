@@ -69,6 +69,7 @@ This way, it is easy to organize and navigate your saved queries.
 - [x] On start, create the sqlite database
 - [x] Allow user to save their query
 - [x] On start, load the tree of queries in memory
+- [ ] Add `gourl help` command
 - [ ] On start, load the tree of queries in memory with only the first letter of each collection
 - [ ] Add `gourl list` command to list all queries
 - [ ] Add `gourl exec --name` command to execute a saved query
