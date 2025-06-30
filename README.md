@@ -61,3 +61,20 @@ This way, it is easy to organize and navigate your saved queries.
 - A lot of flags have a short form. `-u` for `--url`, `-d` for `--data`, etc. All the forms can be found in via the `help` command.
 
 - If you want to download a file and store its content locally, on Linux you can use the following command: `gourl get --url https://<url-to-file-here> | awk '/^body:/{flag=1; next} /^headers:/{flag=0} flag' > ./filename.txt`
+
+## Roadmap
+
+- [x] Use Interfaces for easily adding more commands
+- [x] Support basic ways of sending HTTP requests
+- [x] On start, create the sqlite database
+- [x] Allow user to save their query
+- [x] On start, load the tree of queries in memory
+- [ ] On start, load the tree of queries in memory with only the first letter of each collection
+- [ ] Add `gourl list` command to list all queries
+- [ ] Add `gourl exec --name` command to execute a saved query
+- [ ] Add `gourl env list|add|remove` command to create different execution environment
+- [ ] Add `gourl var list|add|remove` command to create variables usable in flags
+- [ ] Extend vaiables in flags in request logic
+
+
+
