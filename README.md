@@ -76,5 +76,8 @@ This way, it is easy to organize and navigate your saved queries.
 - [ ] Add `gourl var list|add|remove` command to create variables usable in flags
 - [ ] Extend vaiables in flags in request logic
 
+## License
+
+Released under the [MIT License](/LICENSE.txt)
 
 
