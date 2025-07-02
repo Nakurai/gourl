@@ -57,6 +57,25 @@ In this example, you can think of `demo` and `test` as groups for you queries. F
 
 This way, it is easy to organize and navigate your saved queries.
 
+### Listing your saved queries
+The `list` command will list all your saved queries in a tree format.
+
+`gourl list`
+
+Here is an example of the result:
+
+```
+/
+    /demo
+        /jsonplaceholder
+            /post-comments (GET)
+        /test
+            /google.ca (GET)
+    /test
+        /google.ca (GET)
+
+```
+
 ## Tip
 - A lot of flags have a short form. `-u` for `--url`, `-d` for `--data`, etc. All the forms can be found in via the `help` command.
 
@@ -76,7 +95,7 @@ This way, it is easy to organize and navigate your saved queries.
 - [ ] Add `gourl load --name` command to execute a saved query
 - [ ] Add `gourl env list|add|remove` command to create different execution environment
 - [ ] Add `gourl var list|add|remove` command to create variables usable in flags
-- [ ] Extend vaiables in flags in request logic
+- [ ] Extend variables in flags in request logic
 
 ## License
 
