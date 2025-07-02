@@ -1,4 +1,4 @@
-package cli
+package models
 
 import (
 	"fmt"
@@ -39,21 +39,21 @@ func (node *QueryTreeNode) AddQueryName(queryNameParts []string, method string) 
 
 // print all the node in the tree until the requested depth is reached
 // pass depth = -1 for printing all the tree
-func (node *QueryTreeNode) Print(depth int, prefix string) {
-	fmt.Printf("%s%s\n", prefix, node.CurrentNode)
+func (node *QueryTreeNode) Print(depth int, prefix string) string {
+	res := fmt.Sprintf("%s/%s\n", prefix, node.CurrentNode)
+	// fmt.Println(res)
 	for _, leaf := range node.Leaves {
-		fmt.Printf("%s%s\n", prefix+"    ", leaf)
+		res += fmt.Sprintf("%s/%s\n", prefix+"    ", leaf)
 	}
-	if depth == 0 {
-		return
-	} else if len(node.SubNodes) == 0 {
-		return
+	if depth == 0 || len(node.SubNodes) == 0 {
+		return res
 	} else {
 		if depth > 0 {
 			depth -= 1
 		}
 		for _, subNode := range node.SubNodes {
-			subNode.Print(depth, prefix+"    ")
+			res += subNode.Print(depth, prefix+"    ")
 		}
 	}
+	return res
 }

@@ -5,6 +5,8 @@ import (
 	"fmt"
 	"os"
 	"strings"
+
+	"github.com/nakurai/gourl/models"
 )
 
 type RequestCmd struct{}
@@ -54,7 +56,7 @@ gourl connect|delete|get|head|options|patch|post|put|trace --url <url> [--data t
 // create and send a new http request based on the provided parameters
 // we are not expecting any actions here
 func (c *RequestCmd) Execute(cmd string, actions []string, flags []Flag) (string, error) {
-	newQuery := Query{
+	newQuery := models.Query{
 		Method: strings.ToUpper(cmd),
 		Data:   map[string]string{},
 		Header: map[string]string{},

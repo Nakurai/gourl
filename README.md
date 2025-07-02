@@ -71,8 +71,9 @@ This way, it is easy to organize and navigate your saved queries.
 - [x] On start, load the tree of queries in memory
 - [x] Add `gourl help` command
 - [ ] On start, load the tree of queries in memory with only the first letter of each collection
-- [ ] Add `gourl list` command to list all queries
-- [ ] Add `gourl exec --name` command to execute a saved query
+- [x] Add `gourl list` command to list all queries
+- [ ] Add `--depth` flag to the `list` command
+- [ ] Add `gourl load --name` command to execute a saved query
 - [ ] Add `gourl env list|add|remove` command to create different execution environment
 - [ ] Add `gourl var list|add|remove` command to create variables usable in flags
 - [ ] Extend vaiables in flags in request logic

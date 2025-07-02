@@ -6,6 +6,7 @@ import (
 
 	"github.com/nakurai/gourl/cli"
 	"github.com/nakurai/gourl/db"
+	"github.com/nakurai/gourl/models"
 	"github.com/nakurai/gourl/utils"
 )
 
@@ -30,13 +31,13 @@ func init() {
 		return
 	}
 
-	err = db.Db.AutoMigrate(&cli.Query{})
+	err = db.Db.AutoMigrate(&models.Query{})
 	if err != nil {
 		fmt.Printf("%v\n", err)
 		return
 	}
 
-	cli.BuildQueryTree()
+	models.BuildQueryTree()
 	// cli.QueryTree.Print(-1, "")
 
 }
@@ -49,7 +50,10 @@ func main() {
 	}
 
 	app := cli.NewCli()
-	err := app.Register([]cli.CmdInterface{&cli.RequestCmd{}})
+	err := app.Register([]cli.CmdInterface{
+		&cli.RequestCmd{},
+		&cli.ListCmd{},
+	})
 	if err != nil {
 		fmt.Printf("error while registering cmds: %v\n", err)
 		return

@@ -1,4 +1,4 @@
-package cli
+package models
 
 import (
 	"database/sql/driver"
