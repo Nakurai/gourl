@@ -6,6 +6,7 @@ import "fmt"
 type CmdInterface interface {
 	GetCmds() []string
 	GetFlags() []ValidFlag
+	GetHelp() string
 	Execute(cmd string, actions []string, flags []Flag) (string, error)
 }
 
@@ -25,12 +26,14 @@ type Flag struct {
 type Cli struct {
 	Cmds  map[string]CmdInterface
 	Flags map[string]string
+	Help  string
 }
 
 func NewCli() Cli {
 	newCli := Cli{}
 	newCli.Cmds = map[string]CmdInterface{}
 	newCli.Flags = map[string]string{}
+	newCli.Help = "gourl - https://github.com/nakurai/gourl"
 	return newCli
 }
 
@@ -39,6 +42,7 @@ func NewCli() Cli {
 // trying to use the same keyword, and also that flags are consistent across all commands.
 // If d means data somewhere, it means data everywhere.
 func (c *Cli) Register(cmds []CmdInterface) error {
+
 	for _, cmd := range cmds {
 
 		// indexing command keywords
@@ -61,6 +65,7 @@ func (c *Cli) Register(cmds []CmdInterface) error {
 				c.Flags[flagLabel] = validFlag.Key
 			}
 		}
+		c.Help += "\n\n" + cmd.GetHelp()
 	}
 	return nil
 }

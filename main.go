@@ -37,11 +37,12 @@ func init() {
 	}
 
 	cli.BuildQueryTree()
-	cli.QueryTree.Print(-1, "")
+	// cli.QueryTree.Print(-1, "")
 
 }
 
 func main() {
+	
 	if len(os.Args) == 1 {
 		fmt.Printf("gourl v.%s - https://github.com/nakurai/gourl\nUse gourl help for doc\n", version)
 		return
@@ -56,6 +57,12 @@ func main() {
 	}
 
 	cmd := os.Args[1]
+
+	if cmd == "help"{
+		fmt.Println(app.Help)
+		return
+	}
+
 	_, ok := app.Cmds[cmd]
 	if !ok {
 		errStr := fmt.Sprintf("error, no registered command has the available cmd: %s.\n", cmd)
