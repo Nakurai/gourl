@@ -48,8 +48,7 @@ gourl connect|delete|get|head|options|patch|post|put|trace --url <url> [--data t
     --data, -d: The data you want to send with the request, either in the body or in the query. The format is key=value. If your value has spaces in it, you must surround the value by double quotes. The data will be send in the body for the following methods: POST, PUT, PATCH. You can use this flag several times. Ex: --data test=test -d test2=test2
     --header, -h: You can specify the request header. Format is like the --data flag: key=value. Ex: Authentication="Bearer XYZ"
     --json, -j: if the value is true, then the body will be formatted as a JSON object and the content-type header will be set to application/json (if no content type header was explictly provided)
-    --save, -s: you can provide any name here and the query will be save alongside with all the flags. If a query with the same name already exists, it will let you know and not save it.
-`
+    --save, -s: you can provide any name here and the query will be save alongside with all the flags. If a query with the same name already exists, it will let you know and not save it.`
 }
 
 

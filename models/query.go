@@ -135,6 +135,7 @@ func (q *Query) Save() error {
 			if res.Error != nil {
 				return fmt.Errorf("error while saving the new query %s: %v", q.Name, res.Error)
 			}
+			return nil
 		} else {
 			return fmt.Errorf("error while fetching existing query %s: %v", q.Name, res.Error)
 		}

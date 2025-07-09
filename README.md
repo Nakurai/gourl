@@ -96,6 +96,9 @@ Here is an example of the result:
 - [ ] Add `gourl env list|add|remove` command to create different execution environment
 - [ ] Add `gourl var list|add|remove` command to create variables usable in flags
 - [ ] Extend variables in flags in request logic
+- [ ] Add `--cookie` flag
+- [ ] Add `--verbose` flag
+
 
 ## License
 

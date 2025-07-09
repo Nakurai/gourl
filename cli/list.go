@@ -23,8 +23,7 @@ func (c *ListCmd) GetHelp() string {
 	return `
 gourl list
 
-  List all the queries you have saved. 
-`
+  List all the queries you have saved.`
 }
 
 // create and send a new http request based on the provided parameters

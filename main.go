@@ -22,24 +22,28 @@ func init() {
 	err := utils.CreateDataDir()
 	if err != nil {
 		fmt.Printf("%v\n", err)
-		return
+		os.Exit(1)
 	}
 
 	err = db.Init()
 	if err != nil {
 		fmt.Printf("%v\n", err)
-		return
+		os.Exit(1)
 	}
 
-	err = db.Db.AutoMigrate(&models.Query{})
+	err = db.Db.AutoMigrate(&models.Query{}, &models.Environment{})
 	if err != nil {
 		fmt.Printf("%v\n", err)
-		return
+		os.Exit(1)
 	}
 
 	models.BuildQueryTree()
-	// cli.QueryTree.Print(-1, "")
 
+	err = models.InitEnvironment()
+	if err != nil {
+		fmt.Printf("%v\n", err)
+		os.Exit(1)
+	}
 }
 
 func main() {
@@ -53,6 +57,7 @@ func main() {
 	err := app.Register([]cli.CmdInterface{
 		&cli.RequestCmd{},
 		&cli.ListCmd{},
+		&cli.EnvCmd{},
 	})
 	if err != nil {
 		fmt.Printf("error while registering cmds: %v\n", err)
