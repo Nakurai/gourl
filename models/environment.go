@@ -25,6 +25,8 @@ func (e Environment) String() string {
 	res := e.Name
 	if e.Current{
 		res = "* "+res
+	}else{
+		res = "  "+res
 	}
 	if e.Description != "" {
 		res += " - " + e.Description
@@ -91,6 +93,7 @@ func GetCurrentEnv() (*Environment, error) {
 }
 
 func LoadEnv(name string) error{
+	db.Db.Exec("UPDATE environments SET current = false;")
 	curEnv, err := GetEnv(name)
 	if err != nil {
 		return err

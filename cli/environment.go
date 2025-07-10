@@ -37,6 +37,7 @@ gourl env add --name <name> [--copy <name>] [--description <your description>]
   Create a new environment. If the copy flag is used, all variables (and their values) of this other environment will be copied over.
 	--name, -n: an arbitrary string to name your environment.
 	--copy, -c: an existing environment name.
+	--description, -desc: a description of the environment.
 
 gourl env remove --name <name>
 
@@ -76,6 +77,7 @@ func (c *EnvCmd) Execute(cmd string, actions []string, flags []Flag) (string, er
 		return allEnvs, nil
 	case "add":
 		newName := ""
+		newDesc := ""
 		copyFrom := ""
 		for _, flag := range flags {
 			switch flag.Key {
@@ -83,6 +85,8 @@ func (c *EnvCmd) Execute(cmd string, actions []string, flags []Flag) (string, er
 				newName = flag.Value
 			case "copy":
 				copyFrom = flag.Value
+			case "description":
+				newDesc = flag.Value
 			default:
 				return "", fmt.Errorf("the %s flag is unknown. Use `gourl env` to list all the options", flag.Key)
 
@@ -115,6 +119,7 @@ func (c *EnvCmd) Execute(cmd string, actions []string, flags []Flag) (string, er
 		newEnv := models.Environment{
 			Name:      newName,
 			Variables: envVars,
+			Description: newDesc,
 			Current:   false,
 		}
 		err = models.CreateEnv(&newEnv)
@@ -163,6 +168,32 @@ func (c *EnvCmd) Execute(cmd string, actions []string, flags []Flag) (string, er
 		}
 
 		return res, nil
+	case "load":
+		nameToLoad := ""
+		for _, flag := range flags {
+			switch flag.Key {
+			case "name":
+				nameToLoad = flag.Value
+			default:
+				return "", fmt.Errorf("the %s flag is unknown. Use `gourl env` to list all the options", flag.Key)
+
+			}
+		}
+		if nameToLoad == "" {
+			return "", fmt.Errorf("the --name flag is mandatory. Use `gourl env` to list all the options")
+		}
+
+		existingEnv, err := models.GetEnv(nameToLoad)
+		if err != nil {
+			return "", err
+		}
+		if existingEnv == nil {
+			return "", fmt.Errorf("no environment named %s exists", nameToLoad)
+		}
+
+		models.LoadEnv(nameToLoad)
+
+		return fmt.Sprintf("%s loaded", nameToLoad), nil
 
 	default:
 		return fmt.Sprintf("Invalid action provided (%s). You must provide one of the actions below:\n%s\n", action, c.GetHelp()), nil
