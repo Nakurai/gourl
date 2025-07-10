@@ -123,6 +123,47 @@ func (c *EnvCmd) Execute(cmd string, actions []string, flags []Flag) (string, er
 		}
 
 		return fmt.Sprintf("done. use `gourl env load --name %s` to activate the new environment", newName), nil
+	case "remove":
+		nameToDelete := ""
+		for _, flag := range flags {
+			switch flag.Key {
+			case "name":
+				nameToDelete = flag.Value
+			default:
+				return "", fmt.Errorf("the %s flag is unknown. Use `gourl env` to list all the options", flag.Key)
+
+			}
+		}
+		if nameToDelete == "" {
+			return "", fmt.Errorf("the --name flag is mandatory. Use `gourl env` to list all the options")
+		}
+		if nameToDelete == "default" {
+			return "", fmt.Errorf("the default env cannot be deleted")
+		}
+
+		existingEnv, err := models.GetEnv(nameToDelete)
+		if err != nil {
+			return "", err
+		}
+		if existingEnv == nil {
+			return "", fmt.Errorf("no environment named %s exists", nameToDelete)
+		}
+
+		db.Db.Delete(existingEnv)
+
+		wasExistingEnv := false
+		if models.CurrentEnv.Name == nameToDelete{
+			wasExistingEnv = true
+			models.LoadEnv("default")
+		}
+
+		res := fmt.Sprintf("env %s deleted.", nameToDelete)
+		if wasExistingEnv{
+			res += "Default environment loaded."
+		}
+
+		return res, nil
+
 	default:
 		return fmt.Sprintf("Invalid action provided (%s). You must provide one of the actions below:\n%s\n", action, c.GetHelp()), nil
 	}

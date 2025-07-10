@@ -23,6 +23,9 @@ type Environment struct {
 
 func (e Environment) String() string {
 	res := e.Name
+	if e.Current{
+		res = "* "+res
+	}
 	if e.Description != "" {
 		res += " - " + e.Description
 	}
@@ -85,4 +88,19 @@ func GetCurrentEnv() (*Environment, error) {
 		return nil, fmt.Errorf("while fetching current environment: %v", res.Error)
 	}
 	return &existingEnv, nil
+}
+
+func LoadEnv(name string) error{
+	curEnv, err := GetEnv(name)
+	if err != nil {
+		return err
+	}
+	if curEnv == nil{
+		return fmt.Errorf("Environment named %s does nto exist", name)
+	}
+	curEnv.Current = true
+	db.Db.Save(curEnv)
+	CurrentEnv = curEnv
+
+	return nil
 }
