@@ -234,3 +234,18 @@ func BuildQueryTree() error {
 
 	return nil
 }
+
+
+func GetQuery(name string) (*Query, error) {
+
+	var existingQuery Query
+	res := db.Db.Where("name = ?", name).First(&existingQuery)
+	if res.Error != nil {
+		if errors.Is(res.Error, gorm.ErrRecordNotFound) {
+			return nil, nil
+		} else {
+			return nil, fmt.Errorf("while fetching query %s: %v", name, res.Error)
+		}
+	}
+	return &existingQuery, nil
+}

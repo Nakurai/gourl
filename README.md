@@ -41,9 +41,15 @@ By default, data will be send as form encoded. To send as JSON, use the `--json`
 `gourl post --url https://jsonplaceholder.typicode.com/posts/1/comments --data id=id1 --data test="my test" --json true`
 
 ### Headers
-For any of those commands, you can specify any header you want by using the flag `--header`:
+For any of those commands, you can specify any header by using the flag `--header`:
 
 `gourl post --url https://jsonplaceholder.typicode.com/posts/1/comments --data id=id1 --data test="my test" --json true --header "Authorization=Bearer your-secret-token" --header foo=bar`
+
+
+### Cookies
+For any of those commands, you can specify any cookie by using the flag `--cookie`:
+
+`gourl post --url https://jsonplaceholder.typicode.com/posts/1/comments --data id=id1 --data test="my test" --json true --header "Authorization=Bearer your-secret-token" --cookie foo=bar`
 
 ### Saving your queries
 Retyping the same query everytime is super tedious. If you reuse the same query a lot, you can save the query and retrieve it later. To do that, use the `--save` flag. This flag takes a slash separated name. Each part of the name will be use as a "category", so it is easier to group your queries.
@@ -75,6 +81,11 @@ Here is an example of the result:
         /google.ca (GET)
 
 ```
+
+### Executing your saved queries
+Use the `load` command to execute a save query. You must use the full path of the query.
+
+`gourl load --name <name>`
 
 ### Using variables
 
@@ -109,7 +120,7 @@ And to delete a variable, use:
 - [ ] On start, load the tree of queries in memory with only the first letter of each collection
 - [x] Add `gourl list` command to list all queries
 - [ ] Add `--depth` flag to the `list` command
-- [ ] Add `gourl load --name` command to execute a saved query
+- [x] Add `gourl load --name` command to execute a saved query
 - [x] Add `gourl env list|add|remove|load` command to create different execution environment
 - [x] Add `gourl var list|add|remove` command to create variables usable in flags
 - [x] Extend variables in flags in request logic
