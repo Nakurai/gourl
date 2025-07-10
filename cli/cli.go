@@ -101,11 +101,3 @@ func (c *Cli) ParseArgs(args []string) ([]string, []Flag, error) {
 	}
 	return actions, flags, nil
 }
-
-// this function will look for variable in the flags and replace them with the current env's values.
-// it errors out if the variable does not exist in the current environment
-// @todo
-func (c *Cli) ReplaceVariables(flags []Flag) error {
-
-	return nil
-}

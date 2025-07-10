@@ -76,7 +76,24 @@ Here is an example of the result:
 
 ```
 
-## Tip
+### Using variables
+
+It is very common to have to execute the same queries in different environment. For example, one can think of testing an API locally, on the dev server and the prod server. In those cases, instead of having three different queries, it is useful to be able to use variables.
+
+All executions happen in an environment. When you first use the `gourl` command, it will create an environment called "default". You can create variables with the command:
+`gourl var add --data key=value`
+
+The variable will be stored in the current environment. So, in our example above, you could have a `local`, `dev` and `prod` environment and have the `url` variable defined in all of them. Then you can simply create a query by specifying the url as such: `--url %{url}%/api/comments`.
+
+As you can see, you use the `%{<variable>}%` syntax to use a variable in any flag. Everytime you execute a query, the variable will be replaced with its value for the loaded environment.
+
+To list the available variables for the loaded environment, use:
+`gourl var list`
+
+And to delete a variable, use:
+`gourl var remove --name <variable key>`
+
+## Tips
 - A lot of flags have a short form. `-u` for `--url`, `-d` for `--data`, etc. All the forms can be found in via the `help` command.
 
 - If you want to download a file and store its content locally, on Linux you can use the following command: `gourl get --url https://<url-to-file-here> | awk '/^body:/{flag=1; next} /^headers:/{flag=0} flag' > ./filename.txt`
@@ -93,10 +110,10 @@ Here is an example of the result:
 - [x] Add `gourl list` command to list all queries
 - [ ] Add `--depth` flag to the `list` command
 - [ ] Add `gourl load --name` command to execute a saved query
-- [ ] Add `gourl env list|add|remove` command to create different execution environment
-- [ ] Add `gourl var list|add|remove` command to create variables usable in flags
-- [ ] Extend variables in flags in request logic
-- [ ] Add `--cookie` flag
+- [x] Add `gourl env list|add|remove|load` command to create different execution environment
+- [x] Add `gourl var list|add|remove` command to create variables usable in flags
+- [x] Extend variables in flags in request logic
+- [x] Add `--cookie` flag
 - [ ] Add `--verbose` flag
 
 

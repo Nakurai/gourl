@@ -89,11 +89,6 @@ func main() {
 		return
 	}
 
-	err = app.ReplaceVariables(flags)
-	if err != nil {
-		fmt.Printf("error replacing variables: %v\n", err)
-		return
-	}
 	res, err := app.Cmds[cmd].Execute(cmd, actions, flags)
 	if err != nil {
 		fmt.Printf("error executing the command: %v\n", err)

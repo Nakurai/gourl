@@ -21,7 +21,7 @@ func (c *EnvCmd) GetFlags() []ValidFlag {
 	return []ValidFlag{
 		{Key: "name", Labels: []string{"-n", "--name"}},
 		{Key: "description", Labels: []string{"-desc", "--description"}},
-		{Key: "copy", Labels: []string{"-c", "--copy"}},
+		{Key: "copy", Labels: []string{"-cp", "--copy"}},
 	}
 }
 
@@ -35,19 +35,19 @@ gourl env list
 gourl env add --name <name> [--copy <name>] [--description <your description>]
 
   Create a new environment. If the copy flag is used, all variables (and their values) of this other environment will be copied over.
-	--name, -n: an arbitrary string to name your environment.
-	--copy, -c: an existing environment name.
-	--description, -desc: a description of the environment.
+	--name,        -n:    An arbitrary string to name your environment.
+	--copy,        -cp:   An existing environment name.
+	--description, -desc: A description of the environment.
 
 gourl env remove --name <name>
 
   Delete an environment. It will also delete all the variables linked to this environment, and their values. If the deleted environment is the currently loaded one, then the default environment will be loaded automatically.
-	--name, -n: an arbitrary string to name your environment.
+	--name,        -n:    An arbitrary string to name your environment.
 
 gourl env load --name <name>
 
   Will load the environment and its variables for all the following requests.
-	--name, -n: an existing environment name.`
+	--name,       -n:    An existing environment name.`
 
 }
 

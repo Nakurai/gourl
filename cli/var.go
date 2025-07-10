@@ -34,12 +34,12 @@ gourl var list
 gourl var add --data key=value
 
   Create a new variable in the current environment. If the key already exists, the value will be replaced.
-	--data, -d: the key/value of the variable, in the format: key=value
+	--data, -d: The key/value of the variable, in the format: key=value
 
 gourl var remove --name <name>
 
   Delete a variable from the current environment.
-	--name, -n: the variable's key`
+	--name, -n: The variable's key`
 }
 
 // create and send a new http request based on the provided parameters
