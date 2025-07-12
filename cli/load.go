@@ -19,23 +19,27 @@ func (c *LodaCmd) GetCmds() []string {
 func (c *LodaCmd) GetFlags() []ValidFlag {
 	return []ValidFlag{
 		{Key: "name", Labels: []string{"-n", "--name"}},
+		{Key: "verbose", Labels: []string{"-v", "--verbose"}},
 	}
 }
 
 // return all the flags this cmd can handle
 func (c *LodaCmd) GetHelp() string {
 	return `
-gourl load --name <name>
+gourl load --name <name> [--verbose true]
 
   Load and execute the saved query using the current environment's variables if necessary`
 }
 
 func (c *LodaCmd) Execute(cmd string, actions []string, flags []Flag) (string, error) {
 	nameToLoad := ""
+	verbose := false
 	for _, flag := range flags {
 		switch flag.Key {
 		case "name":
 			nameToLoad = flag.Value
+		case "verbose":
+			verbose = flag.Value == "true"
 		default:
 			return "", fmt.Errorf("the %s flag is unknown. Use `gourl load` to list all the options", flag.Key)
 
@@ -53,5 +57,5 @@ func (c *LodaCmd) Execute(cmd string, actions []string, flags []Flag) (string, e
 		return "", fmt.Errorf("no query named %s exists", nameToLoad)
 	}
 
-	return query.Send()
+	return query.Send(verbose)
 }

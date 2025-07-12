@@ -68,7 +68,10 @@ func ExpandMapVariable(d map[string]string)(map[string]string, error){
 	return res, nil
 }
 
-func (q *Query) Send() (string, error) {
+// build the http query from the query's content.
+// if verbose is true, it will display headers, urls, data sent and the body
+// if verbose is false, it will only display the bpdy as a string
+func (q *Query) Send(verbose bool) (string, error) {
 	// just in case
 	q.Method = strings.ToUpper(q.Method)
 	var body io.Reader
@@ -109,7 +112,7 @@ func (q *Query) Send() (string, error) {
 		return "", err
 	}
 
-	// adding the headers to the request
+	// adding the variable expanded headers to the request
 	expandedHeaders, err := ExpandMapVariable(q.Header)
 	if err != nil{
 		return "", err
@@ -118,7 +121,7 @@ func (q *Query) Send() (string, error) {
 		req.Header.Set(headerKey, headerValue)
 	}
 
-	// Adding cookies to request
+	// adding the variable expanded cookies to request
 	expandedCookies, err := ExpandMapVariable(q.Cookie)
 	if err != nil{
 		return "", err
@@ -141,12 +144,16 @@ func (q *Query) Send() (string, error) {
 		return "", err
 	}
 	bodyString := string(resBody)
-	headerJson, err := json.Marshal(res.Header)
-	if err != nil {
-		return "", err
+	finalString := fmt.Sprintf("%s\n", bodyString)
+
+	if verbose{
+		headerJson, err := json.Marshal(res.Header)
+		if err != nil {
+			return "", err
+		}
+		headerString := string(headerJson)
+		finalString = fmt.Sprintf("url: %s\n%s\n\nbody:\n%s\n\nheaders:\n%s\n",urlToUse, res.Status, bodyString, headerString)
 	}
-	headerString := string(headerJson)
-	finalString := fmt.Sprintf("%s\n\nbody:\n%s\n\nheaders:\n%s\n", res.Status, bodyString, headerString)
 	return finalString, nil
 }
 

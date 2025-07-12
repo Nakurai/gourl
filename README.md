@@ -125,7 +125,7 @@ And to delete a variable, use:
 - [x] Add `gourl var list|add|remove` command to create variables usable in flags
 - [x] Extend variables in flags in request logic
 - [x] Add `--cookie` flag
-- [ ] Add `--verbose` flag
+- [x] Add `--verbose` flag
 
 
 ## License

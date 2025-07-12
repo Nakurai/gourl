@@ -35,6 +35,7 @@ func (c *RequestCmd) GetFlags() []ValidFlag {
 		{Key: "save", Labels: []string{"-s", "--save"}},
 		{Key: "url", Labels: []string{"-u", "--url"}},
 		{Key: "cookie", Labels: []string{"-c", "--cookie"}},
+		{Key: "verbose", Labels: []string{"-v", "--verbose"}},
 	}
 }
 
@@ -42,7 +43,7 @@ func (c *RequestCmd) GetFlags() []ValidFlag {
 // return all the flags this cmd can handle
 func (c *RequestCmd) GetHelp() string {
 	return `
-gourl connect|delete|get|head|options|patch|post|put|trace --url <url> [--data test=test] [--header test=test] [--json true|false] [--save <name>] 
+gourl connect|delete|get|head|options|patch|post|put|trace --url <url> [--data test=test] [--header test=test] [--json true|false] [--save <name>] [--verbose true]
 
   Send a request to the url provided via the --url flags. List of flags are:
     --url,    -u: The URL you want to send the request to. This flag is mandatory. Ex: --url https://example.com
@@ -50,13 +51,15 @@ gourl connect|delete|get|head|options|patch|post|put|trace --url <url> [--data t
     --header, -h: You can specify the request header. Format is like the --data flag: key=value. Ex: Authentication="Bearer XYZ"
     --json,   -j: If the value is true, then the body will be formatted as a JSON object and the content-type header will be set to application/json (if no content type header was explictly provided)
     --save,   -s: You can provide any name here and the query will be save alongside with all the flags. If a query with the same name already exists, it will let you know and not save it.
-    --cookie, -c: Just like for data and headers, you can specify the request cookies.`
+    --cookie, -c: Just like for data and headers, you can specify the request cookies.
+    --verbose, -v: If true, then it will display more information about the query, otherwise, only the response body.`
 }
 
 
 // create and send a new http request based on the provided parameters
 // we are not expecting any actions here
 func (c *RequestCmd) Execute(cmd string, actions []string, flags []Flag) (string, error) {
+	verbose := false
 	newQuery := models.Query{
 		Method: strings.ToUpper(cmd),
 		Data:   map[string]string{},
@@ -79,6 +82,8 @@ func (c *RequestCmd) Execute(cmd string, actions []string, flags []Flag) (string
 			newQuery.Name = flag.Value
 		case "url":
 			newQuery.Url = flag.Value
+		case "verbose":
+			verbose = flag.Value == "true"
 		default:
 			return "", fmt.Errorf("unknown flag %s. Use gourl help for a list of valid flags", flag.Key)
 
@@ -116,6 +121,6 @@ func (c *RequestCmd) Execute(cmd string, actions []string, flags []Flag) (string
 
 	}
 
-	return newQuery.Send()
+	return newQuery.Send(verbose)
 
 }
