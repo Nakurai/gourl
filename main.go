@@ -49,7 +49,7 @@ func init() {
 func main() {
 	
 	if len(os.Args) == 1 {
-		fmt.Printf("gourl v.%s - https://github.com/nakurai/gourl\nUse gourl help for doc\n", version)
+		fmt.Printf("gourl v%s - https://github.com/nakurai/gourl\nUse gourl help for doc\n", version)
 		return
 	}
 
