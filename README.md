@@ -5,6 +5,12 @@ Gourl (pronounced "goorl") is a command line tool that mixes cURL and tools like
 ## Installation
 Download the right executables and make sure it is accessible via your path.
 
+For MacOS users, you should be able to install it via Homebrew by typing:
+```
+brew tap Nakurai/nakurai
+brew install gourl
+```
+
 On the first execution, a new folder `.gourl` will be created in the home directory of the user.
 
 ## How to use
