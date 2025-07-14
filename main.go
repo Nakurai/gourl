@@ -59,6 +59,7 @@ func main() {
 		&cli.ListCmd{},
 		&cli.EnvCmd{},
 		&cli.VarCmd{},
+		&cli.LoadCmd{},
 	})
 	if err != nil {
 		fmt.Printf("error while registering cmds: %v\n", err)

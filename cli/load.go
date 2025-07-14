@@ -6,17 +6,17 @@ import (
 	"github.com/nakurai/gourl/models"
 )
 
-type LodaCmd struct{}
+type LoadCmd struct{}
 
 // return all the commands that will lead to this execution path
-func (c *LodaCmd) GetCmds() []string {
+func (c *LoadCmd) GetCmds() []string {
 	return []string{
 		"load",
 	}
 }
 
 // return all the flags this cmd can handle
-func (c *LodaCmd) GetFlags() []ValidFlag {
+func (c *LoadCmd) GetFlags() []ValidFlag {
 	return []ValidFlag{
 		{Key: "name", Labels: []string{"-n", "--name"}},
 		{Key: "verbose", Labels: []string{"-v", "--verbose"}},
@@ -24,14 +24,14 @@ func (c *LodaCmd) GetFlags() []ValidFlag {
 }
 
 // return all the flags this cmd can handle
-func (c *LodaCmd) GetHelp() string {
+func (c *LoadCmd) GetHelp() string {
 	return `
 gourl load --name <name> [--verbose true]
 
   Load and execute the saved query using the current environment's variables if necessary`
 }
 
-func (c *LodaCmd) Execute(cmd string, actions []string, flags []Flag) (string, error) {
+func (c *LoadCmd) Execute(cmd string, actions []string, flags []Flag) (string, error) {
 	nameToLoad := ""
 	verbose := false
 	for _, flag := range flags {
